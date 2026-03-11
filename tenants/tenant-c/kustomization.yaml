@@ -1,0 +1,48 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/tenant-template
+  - rbac.yaml
+
+namespace: tenant-c
+
+commonLabels:
+  tenant: tenant-c
+
+patches:
+  - target:
+      kind: Namespace
+      name: tenant-template
+    patch: |
+      - op: replace
+        path: /metadata/name
+        value: tenant-c
+  - target:
+      kind: ServiceAccount
+      name: sa-tenant-template
+    patch: |
+      - op: replace
+        path: /metadata/name
+        value: sa-tenant-c
+  - target:
+      kind: RoleBinding
+      name: tenant-role-binding
+    patch: |
+      - op: replace
+        path: /subjects/0/name
+        value: sa-tenant-c
+  - target:
+      kind: Deployment
+      name: web
+    patch: |
+      - op: replace
+        path: /spec/template/spec/serviceAccountName
+        value: sa-tenant-c
+  - target:
+      kind: Pod
+      name: curl-client
+    patch: |
+      - op: replace
+        path: /spec/serviceAccountName
+        value: sa-tenant-c
