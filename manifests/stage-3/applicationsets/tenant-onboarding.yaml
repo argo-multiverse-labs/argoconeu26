@@ -10,6 +10,7 @@ spec:
         revision: HEAD
         directories:
           - path: tenants/*
+        requeueAfterSeconds: 15
   template:
     metadata:
       name: "tenant-stack-{{path.basename}}"

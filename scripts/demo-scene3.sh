@@ -39,10 +39,11 @@ pe "cat ../manifests/stage-3/applicationsets/tenant-onboarding.yaml"
 p "# And here's the git directory structure:"
 pe "ls -la ../tenants/"
 
-p "# Let's apply the ApplicationSet"
+p "# Let's apply the ApplicationSet and retire the per-app Applications"
 
 pe "kubectl apply -f ../manifests/stage-3/projects/platform-admin-project.yaml"
 pe "kubectl apply -f ../manifests/stage-3/applicationsets/tenant-onboarding.yaml"
+pe "kubectl delete application -n argocd tenant-a tenant-b shared-services --ignore-not-found"
 
 p "# Now let's add a brand new tenant with one git commit"
 
@@ -84,8 +85,9 @@ p "# Which traffic is allowed, which is denied, and why."
 
 p "# Let's watch denied flows while I try some cross-tenant access"
 
-p "# (Run this in a separate terminal window)"
-p "hubble observe --namespace shared-services --verdict DROPPED --follow"
+p "# In a separate terminal, start the Hubble port-forward and observe:"
+p "# make hubble-pf"
+p "# hubble observe --namespace shared-services --verdict DROPPED --follow"
 
 p "# Now attempting the blocked /admin path..."
 

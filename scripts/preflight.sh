@@ -7,17 +7,17 @@ WARN=0
 
 function check_pass() {
     echo -e "  \033[0;32m[PASS]\033[0m $1"
-    ((PASS++))
+    ((PASS++)) || true
 }
 
 function check_fail() {
     echo -e "  \033[0;31m[FAIL]\033[0m $1"
-    ((FAIL++))
+    ((FAIL++)) || true
 }
 
 function check_warn() {
     echo -e "  \033[0;33m[WARN]\033[0m $1"
-    ((WARN++))
+    ((WARN++)) || true
 }
 
 echo "============================================"
@@ -33,6 +33,7 @@ echo "--- CLI Tools ---"
 for cmd in docker kind kubectl helm cilium hubble kubectx pv; do
     if command -v "$cmd" &>/dev/null; then
         VERSION=$($cmd version --short 2>/dev/null || $cmd version --client --short 2>/dev/null || $cmd --version 2>/dev/null | head -1 || echo "installed")
+        VERSION=$(echo "$VERSION" | head -1)
         check_pass "$cmd: ${VERSION}"
     else
         check_fail "$cmd: NOT INSTALLED"
@@ -140,10 +141,10 @@ echo ""
 echo "--- Service Access ---"
 
 # ArgoCD UI (NodePort 30443)
-if curl -sk --max-time 5 https://localhost:30443 &>/dev/null; then
-    check_pass "ArgoCD UI accessible at https://localhost:30443"
+if curl -s --max-time 5 http://localhost:30443 &>/dev/null; then
+    check_pass "ArgoCD UI accessible at http://localhost:30443"
 else
-    check_warn "ArgoCD UI not accessible at https://localhost:30443"
+    check_warn "ArgoCD UI not accessible at http://localhost:30443"
 fi
 
 # Hubble UI (NodePort 30080)

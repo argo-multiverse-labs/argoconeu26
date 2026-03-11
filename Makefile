@@ -240,7 +240,7 @@ info: ## Print all access URLs, credentials, and cluster status
 	@kubectl get nodes -o wide 2>/dev/null || echo "  Cluster not running"
 	@echo ""
 	@echo "--- ArgoCD ---"
-	@echo "  UI:       https://localhost:30443"
+	@echo "  UI:       http://localhost:30443"
 	@echo "  User:     admin"
 	@printf "  Password: "; kubectl get secret argocd-initial-admin-secret -n argocd \
 		-o jsonpath='{.data.password}' 2>/dev/null | $(BASE64_DECODE); echo
