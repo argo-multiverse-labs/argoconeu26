@@ -58,7 +58,9 @@ p "# The tenant SA CANNOT create CiliumNetworkPolicies (only get/list/watch)."
 p "# Even if the AppProject were misconfigured, Kubernetes RBAC stops it."
 
 p "# And SA-scoped CNPs ensure pods running as the wrong ServiceAccount"
-p "# get no allowed network paths."
+p "# get no allowed network paths. For Example:"
+
+pe "yq e .spec ../manifests/stage-4/ciliumnetworkpolicies/shared-services-sa-scoped.yaml"
 
 echo ""
 

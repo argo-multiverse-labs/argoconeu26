@@ -82,6 +82,7 @@ scene_break "FOURTH WALL BREAK: CiliumNetworkPolicies -- L7 Filtering"
 p "# CiliumNetworkPolicies are a SUPERSET of standard NetworkPolicies."
 p "# They add: L7 filtering (HTTP paths/methods), DNS-aware policies (toFQDNs),"
 p "# and identity-based enforcement via eBPF."
+pe "yq e  .spec ../manifests/stage-1b/ciliumnetworkpolicies/shared-services-l7.yaml"
 
 scene_break "PLATFORM ENGINEER: Upgrading to CiliumNetworkPolicies"
 

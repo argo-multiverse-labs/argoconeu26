@@ -32,6 +32,7 @@ HAS_KIND     := $(shell command -v kind;)
 HAS_CILIUM   := $(shell command -v cilium;)
 HAS_HUBBLE   := $(shell command -v hubble;)
 HAS_PV       := $(shell command -v pv;)
+HAS_YQ       := $(shell command -v yq;)
 HAS_ARGOCD   := $(shell command -v argocd;)
 
 .PHONY: vendor
@@ -59,6 +60,9 @@ ifndef HAS_HUBBLE
 endif
 ifndef HAS_PV
 	$(error You must install pv (pipe viewer) for demo-magic.sh)
+endif
+ifndef HAS_YQ
+	$(error You must install yq for demo-magic.sh)
 endif
 
 ################################################################################
