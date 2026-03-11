@@ -41,6 +41,7 @@ p "# Step 1: Create scoped ArgoCD Projects for each tenant"
 pe "cat ../manifests/stage-2/projects/tenant-a-project.yaml"
 pe "kubectl apply -f ../manifests/stage-2/projects/tenant-a-project.yaml"
 pe "kubectl apply -f ../manifests/stage-2/projects/tenant-b-project.yaml"
+pe "kubectl apply -f ../manifests/stage-2/projects/shared-services-project.yaml"
 
 p "# Step 2: Lock down the default project"
 

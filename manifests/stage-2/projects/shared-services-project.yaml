@@ -1,14 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: platform-admin
+  name: shared-services
   namespace: argocd
 spec:
-  description: "Platform admin project — used by tenant onboarding ApplicationSet"
+  description: "Project for shared platform services"
   destinations:
-    - namespace: "tenant-*"
-      server: https://kubernetes.default.svc
-    - namespace: argocd
+    - namespace: shared-services
       server: https://kubernetes.default.svc
   sourceRepos:
     - https://github.com/argo-multiverse-labs/argoconeu26.git

@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - ../../base/tenant-template
-  - project.yaml
   - rbac.yaml
 
 namespace: tenant-a

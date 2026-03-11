@@ -10,10 +10,14 @@ spec:
       server: https://kubernetes.default.svc
   sourceRepos:
     - https://github.com/argo-multiverse-labs/argoconeu26.git
-  clusterResourceWhitelist: []
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
   namespaceResourceWhitelist:
     - group: ""
       kind: ConfigMap
+    - group: ""
+      kind: Pod
     - group: ""
       kind: Secret
     - group: ""
@@ -26,6 +30,10 @@ spec:
       kind: StatefulSet
     - group: apps
       kind: ReplicaSet
+    - group: rbac.authorization.k8s.io
+      kind: Role
+    - group: rbac.authorization.k8s.io
+      kind: RoleBinding
     - group: networking.k8s.io
       kind: Ingress
     - group: networking.k8s.io
