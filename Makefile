@@ -106,12 +106,12 @@ argocd-install: vendor ## Install ArgoCD via Helm
 		--namespace argocd --create-namespace \
 		--values cluster/argocd-values.yaml \
 		--wait --timeout 5m
-	kubectl wait --for=condition=Ready pods --all -n argocd --timeout=300s
+	kubectl wait --for=condition=Ready pods -l app.kubernetes.io/part-of=argocd --field-selector=status.phase=Running -n argocd --timeout=300s
 
 .PHONY: deploy-workloads
 deploy-workloads: vendor ## Deploy tenant namespaces, workloads, and shared-services (Stage 0)
 	kubectx kind-$(KIND_CLUSTER_NAME)
-	kubectl apply -f shared-services/
+	kubectl apply -k shared-services/
 	kubectl apply -k tenants/tenant-a/
 	kubectl apply -k tenants/tenant-b/
 	kubectl wait --for=condition=Ready pods --all -n tenant-a --timeout=120s
@@ -165,7 +165,7 @@ reset-demo: vendor ## Reset demo to Stage 0 (Prologue) -- keeps infrastructure
 	kubectl rollout restart deployment argocd-application-controller -n argocd
 	kubectl rollout status deployment argocd-application-controller -n argocd --timeout=120s
 	@echo "Re-deploying workloads..."
-	kubectl apply -f shared-services/
+	kubectl apply -k shared-services/
 	kubectl apply -k tenants/tenant-a/
 	kubectl apply -k tenants/tenant-b/
 	kubectl wait --for=condition=Ready pods --all -n tenant-a --timeout=120s

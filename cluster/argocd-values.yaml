@@ -15,7 +15,8 @@ server:
     - --insecure
   service:
     type: NodePort
-    nodePortHttps: 30443
+    nodePortHttp: 30443
+    nodePortHttps: 30444
 
 repoServer:
   replicas: 1
