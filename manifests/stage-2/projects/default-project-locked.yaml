@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: default
+  namespace: argocd
+spec:
+  description: "Default project — locked down, do not use"
+  destinations: []
+  sourceRepos: []
+  clusterResourceWhitelist: []

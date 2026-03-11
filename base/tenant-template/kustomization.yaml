@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - rbac/service-account.yaml
+  - rbac/role.yaml
+  - rbac/role-binding.yaml
+  - workloads/deployment.yaml
+  - workloads/service.yaml
+  - workloads/curl-client.yaml
+  - network-policies/default-deny.yaml
+  - network-policies/allow-dns.yaml
+  - network-policies/allow-shared-services.yaml

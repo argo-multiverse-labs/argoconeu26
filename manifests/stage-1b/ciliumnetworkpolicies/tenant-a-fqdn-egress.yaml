@@ -1,0 +1,35 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: allow-egress-external-api
+  namespace: tenant-a
+spec:
+  endpointSelector:
+    matchLabels:
+      app: curl-client
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+          rules:
+            dns:
+              - matchPattern: "*"
+    - toFQDNs:
+        - matchName: "github.com"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+    - toFQDNs:
+        - matchPattern: "*.example-corp.internal"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

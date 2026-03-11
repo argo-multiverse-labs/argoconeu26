@@ -330,6 +330,7 @@ The ApplicationSet manifest references the repo at `revision: HEAD` (or `main`).
 **Decision: Use GitHub.** The demo runs against the real GitHub repo. The Scene 3 commit is a real `git push` to GitHub. ArgoCD polls GitHub on its default interval (~3 minutes) or can be manually triggered via `argocd app get --refresh`.
 
 ### 3.3 Directory Structure Added
+<!-- STATUS: REVIEWED -->
 
 The `tenants/tenant-c/` directory contains the complete tenant stack. All files are pre-prepared and added in a single commit.
 
@@ -528,6 +529,7 @@ During Scene 3, the presenter copies the files into `tenants/tenant-c/`, commits
 For rehearsal resets, `tenants/tenant-c/` is deleted and the delete is committed (or the staging copy is simply restored). See Section 5.
 
 ### Directory Layout for Staging
+<!-- STATUS: REVIEWED -->
 
 ```
 argoconeu26/
@@ -570,6 +572,7 @@ Because the demo uses Option 3 (single branch, all files present, progression vi
 These can be done independently or together.
 
 ### Makefile Targets
+<!-- STATUS: PENDING — implemented in doc 05 -->
 
 ```makefile
 # ---- Demo Reset ----

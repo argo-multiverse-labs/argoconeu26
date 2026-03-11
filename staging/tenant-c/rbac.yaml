@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-tenant-c
+  namespace: tenant-c
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: tenant-c-role
+  namespace: tenant-c
+rules:
+  - apiGroups: ["", "apps", "batch"]
+    resources: ["pods", "deployments", "services", "configmaps", "secrets",
+                "statefulsets", "replicasets", "jobs"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  - apiGroups: ["cilium.io"]
+    resources: ["ciliumnetworkpolicies"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tenant-c-rolebinding
+  namespace: tenant-c
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tenant-c-role
+subjects:
+  - kind: ServiceAccount
+    name: sa-tenant-c
+    namespace: tenant-c

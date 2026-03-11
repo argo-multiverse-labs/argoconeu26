@@ -34,6 +34,7 @@ When ArgoCD is installed, it creates a single `default` AppProject. This project
 All tenants share this project. There is no boundary between what tenant-a and tenant-b can deploy.
 
 ### Default AppProject Manifest
+<!-- STATUS: REVIEWED -->
 
 This is what ships with ArgoCD out of the box:
 
@@ -62,6 +63,7 @@ spec:
 ```
 
 ### Demo Scenario: Cross-Tenant Deployment Attack
+<!-- STATUS: REVIEWED -->
 
 The Rogue Tenant (tenant-a) creates an Application that deploys a workload into tenant-b's namespace. Because everyone shares the `default` project, this succeeds.
 
@@ -160,6 +162,7 @@ This succeeds because the default project has no `clusterResourceWhitelist` rest
 **Purpose:** Introduce ArgoCD Projects as the orchestration-layer boundary. Each tenant gets their own project scoped to their namespaces, repos, and permitted resource types. Combined with RBAC, tenants have self-service within their boundary and cannot see or modify other projects.
 
 ### Per-Tenant AppProject Manifests
+<!-- STATUS: REVIEWED -->
 
 **Tenant-A Project:**
 
@@ -298,6 +301,7 @@ spec:
 ```
 
 ### RBAC Configuration (argocd-rbac-cm)
+<!-- STATUS: REVIEWED -->
 
 The RBAC ConfigMap controls who can do what in the ArgoCD API and UI. This is separate from the AppProject roles above — AppProject roles control what Applications within a project can do, while RBAC controls what users/groups can do in the ArgoCD API.
 
@@ -379,6 +383,7 @@ data:
 - `policy.default: role:none` ensures unauthenticated or unmapped users have zero access
 
 ### Before/After: Cross-Tenant Deployment Attempt
+<!-- STATUS: REVIEWED -->
 
 **The same rogue Application from Stage 0, but now assigned to the tenant-a project:**
 
@@ -491,6 +496,7 @@ tenants/
 ```
 
 ### ApplicationSet Manifest
+<!-- STATUS: REVIEWED -->
 
 This single ApplicationSet provisions the entire tenant stack. It uses the git directory generator to discover tenant directories and templates out an Application per tenant that deploys their full stack (Project, RBAC, CNPs, workloads).
 
@@ -723,6 +729,7 @@ spec:
 ```
 
 ### Platform-Admin Project
+<!-- STATUS: REVIEWED -->
 
 The ApplicationSet itself needs to run in a project with broad permissions to create AppProjects and resources across tenant namespaces:
 
@@ -821,6 +828,7 @@ Sync impersonation is configured in three places:
 3. **ServiceAccount RBAC** — ensure each tenant's ServiceAccount has appropriate (limited) permissions
 
 #### Step 1: Enable Impersonation in argocd-cm
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-4/argocd-config/argocd-cm.yaml (patch)
@@ -840,6 +848,7 @@ data:
 > **NOTE:** In ArgoCD 2.10-2.13, the setting key was `application.sync.impersonation.enabled`. Verify the exact key name against the documentation for the pinned ArgoCD version. See [Open Questions](#open-questions).
 
 #### Step 2: Configure Impersonation in AppProject
+<!-- STATUS: REVIEWED -->
 
 Each tenant's AppProject specifies the ServiceAccount to impersonate during sync. This is set via the `spec.destinationServiceAccounts` field:
 
@@ -902,6 +911,7 @@ spec:
 The key addition is `spec.destinationServiceAccounts`. This tells ArgoCD: "When syncing any Application in the tenant-a project that targets the tenant-a namespace, impersonate the `tenant-a-sa` ServiceAccount."
 
 #### Step 3: Grant the ArgoCD Controller Permission to Impersonate
+<!-- STATUS: REVIEWED -->
 
 The ArgoCD application controller needs Kubernetes RBAC permission to impersonate tenant ServiceAccounts. Create a ClusterRole and ClusterRoleBinding:
 

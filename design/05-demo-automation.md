@@ -24,6 +24,7 @@
 The top-level Makefile follows the pattern established in `local-cluster/argo-cdviz-flux/kind-cluster/Makefile`. It provides cluster lifecycle targets, per-component install targets, demo stage management, and information display.
 
 ### File: `Makefile`
+<!-- STATUS: REVIEWED -->
 
 ```makefile
 SHELL ?= /bin/bash
@@ -413,6 +414,7 @@ preflight: vendor ## Run full pre-flight validation of demo environment
 Each scene gets its own demo-magic.sh-based script. The scripts use `pe` (print and execute), `p` (print only), and comment lines for narration. Press ENTER to advance between steps.
 
 ### 2.1 Common Preamble
+<!-- STATUS: REVIEWED -->
 
 All scripts source a shared preamble that sets up demo-magic.sh and common variables:
 
@@ -459,6 +461,7 @@ function as_narrator() {
 ```
 
 ### 2.2 Prologue Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/demo-prologue.sh
@@ -515,6 +518,7 @@ wait
 ```
 
 ### 2.3 Scene 1 Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/demo-scene1.sh
@@ -639,6 +643,7 @@ wait
 ```
 
 ### 2.4 Scene 2 Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/demo-scene2.sh
@@ -731,6 +736,7 @@ wait
 ```
 
 ### 2.5 Scene 3 Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/demo-scene3.sh
@@ -838,6 +844,7 @@ wait
 ```
 
 ### 2.6 Scene 4 Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/demo-scene4.sh
@@ -961,6 +968,7 @@ Each stage builds on the prior stages. Resetting to a given stage requires:
 **Total reset time: approximately 10-20 seconds for any stage.** The cluster, Cilium, and ArgoCD are never torn down during a reset.
 
 ### 3.2 Reset Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/reset-to-stage.sh
@@ -1258,6 +1266,7 @@ Before recording each scene:
 ## 5. Pre-flight Checks
 
 ### 5.1 Pre-flight Script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 # scripts/preflight.sh

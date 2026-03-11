@@ -134,6 +134,7 @@ The policies do NOT allow cross-tenant traffic. After applying these, the Rogue 
 ### Policy manifests
 
 #### 1. Default-deny ingress and egress — tenant-a
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1a/networkpolicies/tenant-a-default-deny.yaml
@@ -151,6 +152,7 @@ spec:
 ```
 
 #### 2. Allow intra-namespace traffic — tenant-a
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1a/networkpolicies/tenant-a-allow-intra-namespace.yaml
@@ -173,6 +175,7 @@ spec:
 ```
 
 #### 3. Allow egress to kube-dns — tenant-a
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1a/networkpolicies/tenant-a-allow-dns.yaml
@@ -201,6 +204,7 @@ spec:
 ```
 
 #### 4. Allow egress to shared-services:8080 — tenant-a
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1a/networkpolicies/tenant-a-allow-shared-services.yaml
@@ -227,6 +231,7 @@ spec:
 ```
 
 #### 5–8. Mirror policies for tenant-b
+<!-- STATUS: REVIEWED -->
 
 Apply the exact same four policies to `tenant-b` — only the `namespace:` field changes. For
 brevity, the manifests are shown as a single combined file:
@@ -308,6 +313,7 @@ spec:
 ```
 
 #### 9. Default-deny and ingress allow — shared-services
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1a/networkpolicies/shared-services-all.yaml
@@ -478,6 +484,7 @@ kubectl delete networkpolicy -n shared-services --all
 ```
 
 #### 2. CiliumNetworkPolicy — L7 HTTP path filtering on shared-services
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-1b/ciliumnetworkpolicies/shared-services-l7.yaml
@@ -541,6 +548,7 @@ spec:
 > router before the demo. See Open Question OQ-1.
 
 #### 3. DNS-aware egress — CiliumNetworkPolicy for tenant-a external access (OPTIONAL / BONUS)
+<!-- STATUS: REVIEWED -->
 
 > **Note:** This `toFQDNs` policy is optional and is NOT exercised during the live demo. It is
 > included here as a bonus example to illustrate DNS-aware egress filtering. If time permits,
@@ -730,6 +738,7 @@ can use is therefore a prerequisite for this policy to be meaningful. See Open Q
 ### Policy manifests
 
 #### 1. SA-scoped ingress on shared-services — only allow known tenant SAs
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-4/ciliumnetworkpolicies/shared-services-sa-scoped.yaml
@@ -775,6 +784,7 @@ spec:
 ```
 
 #### 2. SA-scoped egress within tenant-a — restrict which SAs can reach shared-services
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-4/ciliumnetworkpolicies/tenant-a-sa-scoped.yaml
@@ -813,6 +823,7 @@ spec:
 ```
 
 #### 3. Mirror for tenant-b
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # manifests/stage-4/ciliumnetworkpolicies/tenant-b-sa-scoped.yaml

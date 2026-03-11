@@ -7,6 +7,7 @@
 ---
 
 ## 1. Namespace Layout
+<!-- STATUS: REVIEWED -->
 
 Six namespaces are required. Four exist from initial cluster bootstrap; the remaining two are created dynamically during the demo.
 
@@ -59,6 +60,7 @@ The `tenant: <name>` label is critical -- CiliumNetworkPolicies use `matchLabels
 ---
 
 ## 2. Tenant Workloads
+<!-- STATUS: REVIEWED -->
 
 Each tenant runs two lightweight services. The workloads exist solely to demonstrate network connectivity (and the blocking of it). They must support `curl` from within pods.
 
@@ -183,6 +185,7 @@ kubectl exec -n tenant-b curl-client -- curl -s -o /dev/null -w "%{http_code}" h
 ---
 
 ## 3. Shared Config API Service
+<!-- STATUS: REVIEWED -->
 
 This is the key service for the L7 filtering demo in Scene 1. It must:
 
@@ -313,6 +316,7 @@ kubectl exec -n tenant-b curl-client -- curl -s http://config-api.shared-service
 ---
 
 ## 4. ArgoCD Application Definitions Per Stage
+<!-- STATUS: REVIEWED -->
 
 The ArgoCD configuration evolves across the talk. Each stage below shows the relevant Application and Project state.
 
@@ -518,6 +522,7 @@ The manually-created Applications (`tenant-a-app.yaml`, `tenant-b-app.yaml`) are
 ---
 
 ## 5. ApplicationSet Design for Scene 3
+<!-- STATUS: REVIEWED -->
 
 ### 5.1 Generator Choice: Git Directory Generator
 

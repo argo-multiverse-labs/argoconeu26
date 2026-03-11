@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-api-nginx
+  namespace: shared-services
+data:
+  default.conf: |
+    server {
+      listen 8080;
+      server_name _;
+
+      location /api/config {
+        default_type application/json;
+        return 200 '{"status":"ok","message":"shared configuration","version":"1.0"}\n';
+      }
+
+      location /healthz {
+        default_type text/plain;
+        return 200 'ok\n';
+      }
+
+      location ~ ^/admin/(?<tenant_id>[^/]+)/config$ {
+        default_type application/json;
+        return 200 '{"status":"ok","tenant":"$tenant_id","secret_key":"s3cr3t-$tenant_id","admin":true}\n';
+      }
+
+      location / {
+        default_type text/plain;
+        return 404 'not found\n';
+      }
+    }

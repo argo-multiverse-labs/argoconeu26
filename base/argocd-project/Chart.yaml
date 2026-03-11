@@ -1,0 +1,5 @@
+apiVersion: v2
+name: argocd-project
+description: Helm chart for per-tenant ArgoCD AppProject
+version: 0.1.0
+type: application

@@ -58,7 +58,8 @@ These are normally present on any Linux distribution with Docker installed. macO
 
 ## 2. KinD Cluster Configuration
 
-### File: `kind-cluster/kind-config.yaml`
+### File: `cluster/kind-config.yaml`
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 kind: Cluster
@@ -148,7 +149,8 @@ Version: 1.19.1
 
 **Version rationale:** Cilium 1.19.1 is the current stable release. It supports all features required by the demo: L7 HTTP policy filtering, Hubble with UI, DNS-aware egress policies (`toFQDNs`), ServiceAccount-based identity, and full KinD compatibility.
 
-### File: `helm-values/cilium-values.yaml`
+### File: `cluster/cilium-values.yaml`
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # =============================================================================
@@ -311,7 +313,8 @@ App version: v3.3.3
 
 **Version rationale:** ArgoCD 3.3.3 is the current stable release. Sync impersonation was introduced in 2.10 and is mature in 3.x. The chart version 9.4.9 deploys ArgoCD v3.3.3.
 
-### File: `helm-values/argocd-values.yaml`
+### File: `cluster/argocd-values.yaml`
+<!-- STATUS: REVIEWED -->
 
 ```yaml
 # =============================================================================
@@ -477,8 +480,9 @@ NodePort services are mapped through KinD's `extraPortMappings` so they are acce
 
 Hubble UI does not expose a NodePort by default. Apply this manifest after Cilium installation:
 
+<!-- STATUS: REVIEWED -->
 ```yaml
-# File: manifests/infrastructure/hubble-ui-nodeport.yaml
+# File: cluster/hubble-ui-nodeport.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -570,6 +574,7 @@ DONE — cluster is ready for demo content
 | **Total** | **~4-6 minutes** |
 
 ### Implementation as shell script
+<!-- STATUS: REVIEWED -->
 
 ```bash
 #!/usr/bin/env bash
@@ -752,6 +757,7 @@ This will:
 ---
 
 ## 8. Makefile
+<!-- STATUS: REVIEWED -->
 
 Top-level Makefile for the demo environment. Follows the pattern from the reference implementation at `local-cluster/argo-cdviz-flux/kind-cluster/Makefile`.
 

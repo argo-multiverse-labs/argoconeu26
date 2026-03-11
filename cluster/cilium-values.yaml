@@ -1,0 +1,32 @@
+# Cilium Helm values for KinD cluster — ArgoConEU26 demo
+# Chart: cilium/cilium v1.19.1
+
+kubeProxyReplacement: true
+
+k8sServiceHost: argoconeu26-control-plane
+k8sServicePort: 6443
+
+operator:
+  replicas: 1
+
+ipam:
+  mode: kubernetes
+
+l7Proxy: true
+
+hubble:
+  enabled: true
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+    replicas: 1
+  metrics:
+    enabled:
+      - drop
+      - flow
+
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup

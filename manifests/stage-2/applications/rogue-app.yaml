@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: rogue-deployment
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/argo-multiverse-labs/argoconeu26.git
+    targetRevision: HEAD
+    path: demo-apps/rogue-workload
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tenant-b
+  syncPolicy:
+    automated:
+      selfHeal: true
