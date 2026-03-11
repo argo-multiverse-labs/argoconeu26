@@ -42,6 +42,8 @@ configs:
     server.insecure: "true"
     admin.enabled: "true"
     applicationsetcontroller.enable.progressive.syncs: "true"
+  secret:
+    argocdServerAdminPassword: "$2a$10$opdj3z3blyN.jV2Bm9LAXOCrexnJiEWCidbCeK1elbHB6WxhCMoH2"
   params:
     server.insecure: "true"
     application.namespaces: "*"

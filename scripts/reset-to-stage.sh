@@ -38,8 +38,8 @@ kubectl delete clusterrolebinding argocd-application-controller-impersonate --ig
 
 # Remove ArgoCD ConfigMap patches (reverts impersonation settings from Stage 4)
 kubectl delete configmap argocd-cm -n argocd --ignore-not-found 2>/dev/null || true
-kubectl rollout restart deployment argocd-application-controller -n argocd
-kubectl rollout status deployment argocd-application-controller -n argocd --timeout=120s
+kubectl rollout restart statefulset argocd-application-controller -n argocd
+kubectl rollout status statefulset argocd-application-controller -n argocd --timeout=120s
 
 # Remove tenant-c namespace (if it exists)
 kubectl delete namespace tenant-c --ignore-not-found 2>/dev/null || true

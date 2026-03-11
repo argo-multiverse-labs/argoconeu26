@@ -89,7 +89,7 @@ p "hubble observe --namespace shared-services --verdict DROPPED --follow"
 
 p "# Now attempting the blocked /admin path..."
 
-pe "kubectl exec -n tenant-a curl-client -- curl -s --max-time 5 -o /dev/null -w '%{http_code}' http://config-api.shared-services.svc.cluster.local:8080/admin/tenant-b/config"
+pe "kubectl exec -n tenant-a curl-client -- curl -s --max-time 5 -o /dev/null -w '%{http_code}\n' http://config-api.shared-services.svc.cluster.local:8080/admin/tenant-b/config"
 
 p "# Hubble (in the other terminal) shows the DROPPED flow with the HTTP path."
 p "# Network policy unit tests in production."

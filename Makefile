@@ -161,9 +161,8 @@ reset-demo: vendor ## Reset demo to Stage 0 (Prologue) -- keeps infrastructure
 	-kubectl delete clusterrole argocd-application-controller-impersonate --ignore-not-found 2>/dev/null
 	-kubectl delete clusterrolebinding argocd-application-controller-impersonate --ignore-not-found 2>/dev/null
 	@echo "Reverting ArgoCD ConfigMap (remove impersonation settings)..."
-	-kubectl delete configmap argocd-cm -n argocd --ignore-not-found 2>/dev/null
-	kubectl rollout restart deployment argocd-application-controller -n argocd
-	kubectl rollout status deployment argocd-application-controller -n argocd --timeout=120s
+	-kubectl patch configmap argocd-cm -n argocd --type=json \
+		-p='[{"op":"remove","path":"/data/application.sync.impersonation.enabled"}]' 2>/dev/null || true
 	@echo "Re-deploying workloads..."
 	kubectl apply -k shared-services/
 	kubectl apply -k tenants/tenant-a/
@@ -223,7 +222,7 @@ reset-to-scene-4: reset-to-scene-3 ## Reset to Scene 4: sync impersonation
 	kubectl apply -f manifests/stage-4/projects/
 	kubectl apply -f manifests/stage-4/ciliumnetworkpolicies/
 	@echo "Restarting ArgoCD application-controller to pick up impersonation setting..."
-	kubectl rollout restart deployment argocd-application-controller -n argocd
+	kubectl rollout restart statefulset argocd-application-controller -n argocd
 	kubectl rollout status deployment argocd-application-controller -n argocd --timeout=120s
 	@echo "Reset to Scene 4 complete."
 

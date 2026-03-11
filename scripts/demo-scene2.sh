@@ -20,7 +20,7 @@ p "# I'll create an Application that deploys into Tenant B's namespace"
 pe "kubectl apply -f ../manifests/stage-2/applications/rogue-app.yaml"
 
 p "# Waiting for the sync..."
-pe "until kubectl get pods -n tenant-b -l app=rogue-implant 2>/dev/null | grep -q Running; do sleep 2; done"
+kubectl wait --for=condition=Ready -n tenant-b -l app=rogue-implant pod --timeout=60s 2>/dev/null || sleep 3
 pe "kubectl get pods -n tenant-b -l app=rogue-implant"
 
 p "# My rogue workload is running in Tenant B's namespace!"

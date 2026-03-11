@@ -44,8 +44,8 @@ p "# Step 4: Apply SA-scoped CiliumNetworkPolicies"
 pe "kubectl apply -f ../manifests/stage-4/ciliumnetworkpolicies/"
 
 p "# Restart the ArgoCD controller to pick up the new setting"
-pe "kubectl rollout restart deployment argocd-application-controller -n argocd"
-pe "kubectl rollout status deployment argocd-application-controller -n argocd --timeout=120s"
+pe "kubectl rollout restart statefulset argocd-application-controller -n argocd"
+pe "kubectl rollout status statefulset argocd-application-controller -n argocd --timeout=120s"
 
 ##############################################################################
 # PAYOFF: Identity-aware enforcement
