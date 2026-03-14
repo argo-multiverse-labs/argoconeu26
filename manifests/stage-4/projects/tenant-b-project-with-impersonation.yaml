@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: tenant-b
+  namespace: argocd
+spec:
+  description: "Project for Tenant B — with sync impersonation"
+  destinations:
+    - namespace: tenant-b
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/argo-multiverse-labs/argoconeu26.git
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ServiceAccount
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: apps
+      kind: ReplicaSet
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+  destinationServiceAccounts:
+    - server: https://kubernetes.default.svc
+      namespace: tenant-b
+      defaultServiceAccount: sa-tenant-b
+  roles:
+    - name: tenant-admin
+      description: "Full access within the tenant-b project"
+      policies:
+        - p, proj:tenant-b:tenant-admin, applications, *, tenant-b/*, allow
+        - p, proj:tenant-b:tenant-admin, logs, get, tenant-b/*, allow
+      groups:
+        - tenant-b-team

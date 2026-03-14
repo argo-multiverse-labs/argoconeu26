@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform-admin
+  namespace: argocd
+spec:
+  description: "Platform admin project — used by tenant onboarding ApplicationSet"
+  destinations:
+    - namespace: "tenant-*"
+      server: https://kubernetes.default.svc
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/argo-multiverse-labs/argoconeu26.git
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

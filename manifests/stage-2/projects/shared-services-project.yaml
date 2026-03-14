@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: shared-services
+  namespace: argocd
+spec:
+  description: "Project for shared platform services"
+  destinations:
+    - namespace: shared-services
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/argo-multiverse-labs/argoconeu26.git
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"

@@ -1,0 +1,34 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: config-api-sa-scoped-policy
+  namespace: shared-services
+spec:
+  endpointSelector:
+    matchLabels:
+      app: config-api
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: tenant-a
+            k8s:io.cilium.k8s.policy.serviceaccount: sa-tenant-a
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+          rules:
+            http:
+              - method: "GET"
+                path: "/api/.*"
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: tenant-b
+            k8s:io.cilium.k8s.policy.serviceaccount: sa-tenant-b
+      toPorts:
+        - ports:
+            - port: "8080"
+              protocol: TCP
+          rules:
+            http:
+              - method: "GET"
+                path: "/api/.*"

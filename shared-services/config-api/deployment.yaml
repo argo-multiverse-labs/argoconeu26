@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-api
+  namespace: shared-services
+  labels:
+    app: config-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-api
+  template:
+    metadata:
+      labels:
+        app: config-api
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              cpu: 50m
+              memory: 32Mi
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: config-api-nginx

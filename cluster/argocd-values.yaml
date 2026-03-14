@@ -1,0 +1,63 @@
+# ArgoCD Helm values for KinD cluster — ArgoConEU26 demo
+# Chart: argo/argo-cd v9.4.9 (ArgoCD v3.3.3)
+
+nameOverride: argocd
+
+crds:
+  install: true
+  keep: true
+
+global:
+  domain: argocd.local
+
+server:
+  extraArgs:
+    - --insecure
+  service:
+    type: NodePort
+    nodePortHttp: 30443
+    nodePortHttps: 30444
+
+repoServer:
+  replicas: 1
+
+controller:
+  replicas: 1
+
+applicationSet:
+  enabled: true
+  replicas: 1
+
+notifications:
+  enabled: false
+
+dex:
+  enabled: false
+
+redis:
+  enabled: true
+
+configs:
+  cm:
+    server.insecure: "true"
+    admin.enabled: "true"
+    applicationsetcontroller.enable.progressive.syncs: "true"
+  secret:
+    argocdServerAdminPassword: "$2a$10$opdj3z3blyN.jV2Bm9LAXOCrexnJiEWCidbCeK1elbHB6WxhCMoH2"
+  params:
+    server.insecure: "true"
+    application.namespaces: "*"
+  rbac:
+    policy.default: role:readonly
+    policy.csv: |
+      g, admin, role:admin
+  repositories: {}
+  credentialTemplates: {}
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

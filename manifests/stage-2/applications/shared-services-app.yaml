@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: shared-services
+  namespace: argocd
+spec:
+  project: shared-services
+  source:
+    repoURL: https://github.com/argo-multiverse-labs/argoconeu26.git
+    targetRevision: main
+    path: shared-services
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: shared-services
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,6 @@
+tenant:
+  name: tenant-b
+  team: "Rogue Team"
+  contact: "rogue@bigcorp.example.com"
+  allowedPaths:
+    - /api/config

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rogue-implant
+  labels:
+    app: rogue-implant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rogue-implant
+  template:
+    metadata:
+      labels:
+        app: rogue-implant
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.27-alpine
+          ports:
+            - containerPort: 80

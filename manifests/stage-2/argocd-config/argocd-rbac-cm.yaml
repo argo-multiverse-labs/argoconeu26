@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-rbac-cm
+  namespace: argocd
+data:
+  policy.default: role:none
+  scopes: "[groups]"
+  policy.csv: |
+    # Platform Admin — full access to everything
+    p, role:platform-admin, applications, *, */*, allow
+    p, role:platform-admin, clusters, *, *, allow
+    p, role:platform-admin, repositories, *, *, allow
+    p, role:platform-admin, certificates, *, *, allow
+    p, role:platform-admin, accounts, *, *, allow
+    p, role:platform-admin, gpgkeys, *, *, allow
+    p, role:platform-admin, logs, *, *, allow
+    p, role:platform-admin, exec, *, */*, allow
+    p, role:platform-admin, projects, *, *, allow
+
+    g, platform-admins, role:platform-admin
+
+    # Tenant A — can only see and manage their own project
+    p, role:tenant-a-role, applications, get, tenant-a/*, allow
+    p, role:tenant-a-role, applications, create, tenant-a/*, allow
+    p, role:tenant-a-role, applications, update, tenant-a/*, allow
+    p, role:tenant-a-role, applications, delete, tenant-a/*, allow
+    p, role:tenant-a-role, applications, sync, tenant-a/*, allow
+    p, role:tenant-a-role, applications, action/*, tenant-a/*, allow
+    p, role:tenant-a-role, logs, get, tenant-a/*, allow
+    p, role:tenant-a-role, projects, get, tenant-a, allow
+    p, role:tenant-a-role, repositories, get, *, allow
+
+    g, tenant-a-team, role:tenant-a-role
+
+    # Tenant B — identical structure, scoped to tenant-b project
+    p, role:tenant-b-role, applications, get, tenant-b/*, allow
+    p, role:tenant-b-role, applications, create, tenant-b/*, allow
+    p, role:tenant-b-role, applications, update, tenant-b/*, allow
+    p, role:tenant-b-role, applications, delete, tenant-b/*, allow
+    p, role:tenant-b-role, applications, sync, tenant-b/*, allow
+    p, role:tenant-b-role, applications, action/*, tenant-b/*, allow
+    p, role:tenant-b-role, logs, get, tenant-b/*, allow
+    p, role:tenant-b-role, projects, get, tenant-b, allow
+    p, role:tenant-b-role, repositories, get, *, allow
+
+    g, tenant-b-team, role:tenant-b-role
