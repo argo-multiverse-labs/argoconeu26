@@ -33,6 +33,8 @@ HAS_CILIUM   := $(shell command -v cilium;)
 HAS_HUBBLE   := $(shell command -v hubble;)
 HAS_PV       := $(shell command -v pv;)
 HAS_YQ       := $(shell command -v yq;)
+HAS_BAT      := $(shell command -v bat || command -v batcat;)
+HAS_GIT      := $(shell command -v git;)
 HAS_ARGOCD   := $(shell command -v argocd;)
 
 .PHONY: vendor
@@ -63,6 +65,12 @@ ifndef HAS_PV
 endif
 ifndef HAS_YQ
 	$(error You must install yq for demo-magic.sh)
+endif
+ifndef HAS_BAT
+	$(error You must install bat (or batcat) for demo scripts)
+endif
+ifndef HAS_GIT
+	$(error You must install git)
 endif
 
 ################################################################################

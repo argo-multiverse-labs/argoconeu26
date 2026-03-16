@@ -30,7 +30,7 @@ echo ""
 # ----------------------------------------
 echo "--- CLI Tools ---"
 
-for cmd in docker kind kubectl helm cilium hubble kubectx pv; do
+for cmd in docker kind kubectl helm cilium hubble kubectx pv yq git; do
     if command -v "$cmd" &>/dev/null; then
         VERSION=$($cmd version --short 2>/dev/null || $cmd version --client --short 2>/dev/null || $cmd --version 2>/dev/null | head -1 || echo "installed")
         VERSION=$(echo "$VERSION" | head -1)
@@ -39,6 +39,15 @@ for cmd in docker kind kubectl helm cilium hubble kubectx pv; do
         check_fail "$cmd: NOT INSTALLED"
     fi
 done
+
+# bat/batcat (name varies by distro)
+if command -v bat &>/dev/null; then
+    check_pass "bat: $(bat --version 2>/dev/null | head -1 || echo 'installed')"
+elif command -v batcat &>/dev/null; then
+    check_pass "batcat: $(batcat --version 2>/dev/null | head -1 || echo 'installed') (aliased as bat in demo scripts)"
+else
+    check_fail "bat (or batcat): NOT INSTALLED"
+fi
 
 # Optional tools
 for cmd in argocd asciinema agg jq; do
