@@ -1,0 +1,8 @@
+{
+  "tenantName": "tenant-c",
+  "team": "tenant-c-team",
+  "namespace": "tenant-c",
+  "sourceRepos": [
+    "https://github.com/argo-multiverse-labs/argoconeu26.git"
+  ]
+}
