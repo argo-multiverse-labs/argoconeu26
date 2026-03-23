@@ -1,0 +1,40 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: tenant-c
+  namespace: argocd
+spec:
+  description: "Auto-provisioned project for tenant-c"
+  destinations:
+    - namespace: tenant-c
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/argo-multiverse-labs/argoconeu26.git
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ""
+      kind: ConfigMap
+    - group: ""
+      kind: Secret
+    - group: ""
+      kind: Service
+    - group: ""
+      kind: ServiceAccount
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: apps
+      kind: ReplicaSet
+    - group: networking.k8s.io
+      kind: Ingress
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+  roles:
+    - name: tenant-admin
+      description: "Full access within the tenant-c project"
+      policies:
+        - p, proj:tenant-c:tenant-admin, applications, *, tenant-c/*, allow
+        - p, proj:tenant-c:tenant-admin, logs, get, tenant-c/*, allow
+      groups:
+        - tenant-c-team
